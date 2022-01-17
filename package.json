@@ -1,28 +1,44 @@
 {
-  "name": "dependency-track-gh-action",
-  "version": "1.0.0",
-  "description": "Publishes BOMs to Dependency-Track and adds vulnerability info to PR comments",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/neerajsu/dependency-track-gh-action.git"
-  },
-  "keywords": [
-    "dependency-track",
-    "cve",
-    "java"
-  ],
-  "author": "Neeraj Subramaniyan",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/neerajsu/dependency-track-gh-action/issues"
-  },
-  "homepage": "https://github.com/neerajsu/dependency-track-gh-action#readme",
-  "dependencies": {
-    "@actions/core": "^1.6.0",
-    "@actions/github": "^5.0.0"
-  }
+    "name": "dependency-track-gh-action",
+    "version": "1.0.0",
+    "description": "Publishes BOMs to Dependency-Track and adds vulnerability info to PR comments",
+    "main": "lib/main.js",
+    "scripts": {
+        "build": "tsc && ncc build",
+        "lint": "eslint src/**/*.ts",
+        "test": "jest --verbose --passWithNoTests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/neerajsu/dependency-track-gh-action.git"
+    },
+    "keywords": [
+        "dependency-track",
+        "cve",
+        "java"
+    ],
+    "author": "Neeraj Subramaniyan",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/neerajsu/dependency-track-gh-action/issues"
+    },
+    "homepage": "https://github.com/neerajsu/dependency-track-gh-action#readme",
+    "dependencies": {
+        "@actions/core": "1.6.0",
+        "@actions/github": "5.0.0",
+        "axios": "^0.24.0"
+    },
+    "devDependencies": {
+        "@types/jest": "27.0.3",
+        "@types/node": "^16.11.11",
+        "@vercel/ncc": "0.32.0",
+        "eslint": "8.3.0",
+        "eslint-plugin-github": "4.3.5",
+        "eslint-plugin-jest": "25.3.0",
+        "jest": "27.4.3",
+        "jest-circus": "27.4.2",
+        "js-yaml": "4.1.0",
+        "ts-jest": "27.0.7",
+        "typescript": "4.5.2"
+    }
 }
