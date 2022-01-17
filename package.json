@@ -1,6 +1,6 @@
 {
     "name": "dependency-track-gh-action",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Publishes BOMs to Dependency-Track and adds vulnerability info to PR comments",
     "main": "lib/main.js",
     "scripts": {

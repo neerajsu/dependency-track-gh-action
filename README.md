@@ -54,7 +54,7 @@ Possible Values are one of CRITICAL, HIGH, MEDIUM, LOW. Example: If `MEDIUM` the
 ## Example usage for on pull request
 
 ```yaml
-uses: neerajsu/dependency-track-gh-action@v1.0.1
+uses: neerajsu/dependency-track-gh-action@v1.0.2
 with:
   serverHostBaseUrl: 'https://depedency.server.url.company.com'
   apikey: ${{ secrets.DEPENDENCYTRACK_APIKEY }}
@@ -69,7 +69,7 @@ with:
 ## Example usage for on push
 
 ```yaml
-uses: neerajsu/dependency-track-gh-action@v1.0.1
+uses: neerajsu/dependency-track-gh-action@v1.0.2
 with:
   serverHostBaseUrl: 'https://depedency.server.url.company.com'
   apikey: ${{ secrets.DEPENDENCYTRACK_APIKEY }}
