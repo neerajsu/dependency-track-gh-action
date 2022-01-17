@@ -1,4 +1,4 @@
-name: "Dependency-track-gh-action"
+name: "dependency-track-gh-action"
 author: Neeraj Subramaniyan
 description: "Publishes BOMs to Dependency-Track and adds vulnerability info to PR comments"
 inputs:
