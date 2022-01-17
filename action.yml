@@ -35,6 +35,9 @@ inputs:
     description: "GITHUB_TOKEN or a repo scoped PAT."
     required: false
     default: ${{ github.token }}
+  failOnSeverityLevel:
+    description: "Possible Values are one of CRITICAL, HIGH, MEDIUM, LOW"
+    required: false
 runs:
   using: "node12"
   main: "index.js"

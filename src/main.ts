@@ -51,12 +51,52 @@ async function run(): Promise<void> {
             await commentOnPullRequest(commentBody);
         }
 
-
+        // fail check if projectFindings have severityLevel above failOnSeverityLevel value
+        const severityLevel = core.getInput('failOnSeverityLevel');
+        if (severityLevel && severityLevel != '') {
+            const shouldFailCheck = doesProjectHaveSeverityVuln(projectFindings, severityLevel);
+            if (shouldFailCheck) {
+                core.setFailed(`Found CVE vulnerabilities in project with severity level ${severityLevel} and above.`);
+            }
+        }
 
     } catch (error: any) {
-        core.debug(inspect(error))
-        core.setFailed(error.message)
+        core.debug(inspect(error));
+        core.setFailed(error.message);
     }
+}
+
+function doesProjectHaveSeverityVuln(projectFindings: ProjectFinding[], failOnSeverityLevel: string): boolean {
+    for (const projectFinding of projectFindings) {
+        switch (failOnSeverityLevel.toUpperCase()) {
+            case 'CRITICAL': {
+                if (projectFinding.vulnerability.severity === "CRITICAL") return true;
+                break;
+            }
+            case 'HIGH': {
+                if (projectFinding.vulnerability.severity === "CRITICAL"
+                    || projectFinding.vulnerability.severity === "HIGH") return true;
+                break;
+            }
+            case 'MEDIUM': {
+                if (projectFinding.vulnerability.severity === "CRITICAL"
+                    || projectFinding.vulnerability.severity === "HIGH"
+                    || projectFinding.vulnerability.severity === "MEDIUM") return true;
+                break;
+            }
+            case 'LOW': {
+                if (projectFinding.vulnerability.severity === "CRITICAL"
+                    || projectFinding.vulnerability.severity === "HIGH"
+                    || projectFinding.vulnerability.severity === "MEDIUM"
+                    || projectFinding.vulnerability.severity === "LOW") return true;
+                break;
+            }
+            default: {
+                throw new Error(`failOnSeverityLevel is not a valid value: ${failOnSeverityLevel}. Please use one of CRITICAL, HIGH, MEDIUM or LOW`);
+            }
+        }
+    }
+    return false;
 }
 
 function convertProjectFindingsToMarkdown(projectFindings: ProjectFinding[]): string {

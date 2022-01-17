@@ -46,16 +46,36 @@ The full name of the repository containing the issue or pull request. Default va
 
 GITHUB_TOKEN or a repo scoped PAT. Default value is `${{ github.token }}`
 
+### `failOnSeverityLevel`
 
-## Example usage
+Possible Values are one of CRITICAL, HIGH, MEDIUM, LOW. Example: If `MEDIUM` then all vulnerabilities from MEDIUM and above fail check/task. If omitted, it will not fail check on any vulnerabilities found. PR will still show all vulnerabilities.
 
-```
+
+## Example usage for on pull request
+
+```yaml
 uses: neerajsu/dependency-track-gh-action@v1.0.0
 with:
   serverHostBaseUrl: 'https://depedency.server.url.company.com'
   apikey: ${{ secrets.DEPENDENCYTRACK_APIKEY }}
   projectname: 'some-project-repository'
-  projectversion: 'master'
+  projectversion: 'feat/some-feature-branch'
+  autocreate: 'true'
   bomFilePath: 'target/bom.xml'
   timeoutInSecs: '10'
+  prNumber: ${{ github.event.pull_request.number }}
+```
+
+## Example usage for on push
+
+```yaml
+uses: neerajsu/dependency-track-gh-action@v1.0.0
+with:
+  serverHostBaseUrl: 'https://depedency.server.url.company.com'
+  apikey: ${{ secrets.DEPENDENCYTRACK_APIKEY }}
+  projectname: 'some-project-repository'
+  projectversion: 'main'
+  bomFilePath: 'target/bom.xml'
+  timeoutInSecs: '10'
+  failOnSeverityLevel: 'CRITICAL'
 ```
