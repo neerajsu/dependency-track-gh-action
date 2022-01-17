@@ -18,7 +18,7 @@ inputs:
     description: "Automatically create the project in Dependency-Track if it doesn't exist"
     default: "false"
     required: false
-  bomfilename:
+  bomfilePath:
     description: "Path with filename of the BOM"
     required: true
   timeoutInSecs:
