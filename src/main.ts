@@ -30,7 +30,7 @@ async function run(): Promise<void> {
         let end = new Date();
         let analysisCompleted: boolean = false;
         while (!analysisCompleted && secondsBetweenDates(end, start) < timeoutInSecs) {
-            core.debug("calling hasBOMAnalysisCompleted");
+            console.log("calling hasBOMAnalysisCompleted");
             analysisCompleted = await hasBOMAnalysisCompleted(dependecyTrackInputs, bomUploadToken);
             sleep(1000);
         }
@@ -41,7 +41,7 @@ async function run(): Promise<void> {
 
         // Get project vulnerability findings
         const projectFindings: ProjectFinding[] = await getProjectFindings(dependecyTrackInputs);
-        core.debug("Project vulneribility findings are below. \n " + JSON.stringify(projectFindings));
+        console.log("Project vulneribility findings are below. \n " + JSON.stringify(projectFindings));
 
         // Convert projectFindings into markdown
         const commentBody: string = convertProjectFindingsToMarkdown(projectFindings);
@@ -61,7 +61,7 @@ async function run(): Promise<void> {
         }
 
     } catch (error: any) {
-        core.debug(inspect(error));
+        console.log(inspect(error));
         core.setFailed(error.message);
     }
 }
@@ -130,7 +130,7 @@ async function commentOnPullRequest(commentBody: string) {
         bodyIncludes: prCommentHeader,
         direction: 'first'  //search direction. first/last
     }
-    core.debug(`Inputs: ${inspect(inputs)}`)
+    console.log(`Inputs: ${inspect(inputs)}`)
 
     const existingPRComment = await findComment(inputs)
 
@@ -143,7 +143,7 @@ async function commentOnPullRequest(commentBody: string) {
             body: commentBody,
             editMode: 'replace'
         });
-        core.debug("PR comment with analysis results has been updated sucessfully.");
+        console.log("PR comment with analysis results has been updated sucessfully.");
     } else {
         // create comment, by ommitting commentId and passing issueNumber (PR Number)
         await createOrUpdateComment({

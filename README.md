@@ -1,4 +1,3 @@
-> This action still Work in progress.
 
 # Dependency track Github Action
 

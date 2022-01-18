@@ -84,7 +84,7 @@ export interface Attribution {
  * @returns : BOM analysis token
  */
 export async function uploadBomFileToDepndencyTrack(input: DependencyTrackInputs): Promise<UploadBomResponseBody> {
-    core.debug(`Reading BOM: ${input.bomFilePath}...`);
+    console.log(`Reading BOM: ${input.bomFilePath}...`);
     const bomContentsBuffer: Buffer = readFileSync(input.bomFilePath);
     let base64EncodedBomContents: string = Buffer.from(bomContentsBuffer).toString('base64');
     if (base64EncodedBomContents.startsWith('77u/')) {
@@ -99,7 +99,7 @@ export async function uploadBomFileToDepndencyTrack(input: DependencyTrackInputs
     }
 
     const bomApiPayloadJsonString = JSON.stringify(bomApiPayload);
-    core.debug(`BOM Api payload is data: ${bomApiPayloadJsonString}`);
+    console.log(`BOM Api payload is data: ${bomApiPayloadJsonString}`);
 
     const requestConfig: AxiosRequestConfig = {
         method: 'PUT',
@@ -115,12 +115,12 @@ export async function uploadBomFileToDepndencyTrack(input: DependencyTrackInputs
     const response = await axios(requestConfig);
 
     if (response.status >= 200 && response.status < 300) {
-        core.debug('Finished uploading BOM to Dependency-Track server.')
+        console.log('Finished uploading BOM to Dependency-Track server.')
         const responseBody: UploadBomResponseBody = response.data;
         return responseBody;
     } else {
-        core.debug('Failed uploading BOM to Dependency-Track server. Response status code: ' + response.status + ', status text: ' + response.statusText);
-        core.debug('Failed response data is ' + response.data);
+        console.log('Failed uploading BOM to Dependency-Track server. Response status code: ' + response.status + ', status text: ' + response.statusText);
+        console.log('Failed response data is ' + response.data);
         throw new Error('Failed to upload bom to dependency Track server');
     }
 }
@@ -138,18 +138,18 @@ export async function hasBOMAnalysisCompleted(input: DependencyTrackInputs, bomU
         headers: {
             'X-API-Key': input.apiKey
         },
-        url: stripTrailingSlash(input.serverHostBaseUrl) + 'api/v1/bom/token/' + bomUploadToken,
+        url: stripTrailingSlash(input.serverHostBaseUrl) + '/api/v1/bom/token/' + bomUploadToken,
     }
 
     const response = await axios(requestConfig);
 
     if (response.status >= 200 && response.status < 300) {
-        core.debug('Bom analysis status API call returned successfully for token: ' + bomUploadToken)
+        console.log('Bom analysis status API call returned successfully for token: ' + bomUploadToken)
         const responseBody: BomAnalysisStatusBody = response.data;
         return !responseBody.processing;
     } else {
-        core.debug('Bom analysis status API call failed for token: ' + bomUploadToken + 'Response status code: ' + response.status + ', status text: ' + response.statusText);
-        core.debug('Failed response data is ' + response.data);
+        console.log('Bom analysis status API call failed for token: ' + bomUploadToken + 'Response status code: ' + response.status + ', status text: ' + response.statusText);
+        console.log('Failed response data is ' + response.data);
         throw new Error('Bom analysis status API call failed.');
     }
 
@@ -173,13 +173,13 @@ export async function getProjectFindings(input: DependencyTrackInputs): Promise<
     const response = await axios(requestConfig);
 
     if (response.status >= 200 && response.status < 300) {
-        core.debug('Returned project findings for project: ' + input.projectName + ' and version: ' + input.projectVersion);
+        console.log('Returned project findings for project: ' + input.projectName + ' and version: ' + input.projectVersion);
         const responseBody: ProjectFinding[] = response.data;
         return responseBody;
     } else {
-        core.debug('Failed to return project findings for name: ' + input.projectName + ' and version: ' + input.projectVersion
+        console.log('Failed to return project findings for name: ' + input.projectName + ' and version: ' + input.projectVersion
             + '. Response status code: ' + response.status + ', status text: ' + response.statusText);
-        core.debug('Failed response data is: ' + response.data);
+        console.log('Failed response data is: ' + response.data);
         throw new Error('Failed to return project findings for name: ' + input.projectName + ' and version: ' + input.projectVersion);
     }
 }
@@ -201,13 +201,13 @@ export async function searchForProject(input: DependencyTrackInputs): Promise<Pr
     const response = await axios(requestConfig);
 
     if (response.status >= 200 && response.status < 300) {
-        core.debug('Found project for name: ' + input.projectName + ' and version: ' + input.projectVersion);
+        console.log('Found project for name: ' + input.projectName + ' and version: ' + input.projectVersion);
         const responseBody: ProjectInfo = response.data;
         return responseBody;
     } else {
-        core.debug('Failed to retrieve project for name: ' + input.projectName + ' and version: ' + input.projectVersion
+        console.log('Failed to retrieve project for name: ' + input.projectName + ' and version: ' + input.projectVersion
             + '. Response status code: ' + response.status + ', status text: ' + response.statusText);
-        core.debug('Failed response data is: ' + response.data);
+        console.log('Failed response data is: ' + response.data);
         throw new Error('Failed to retrieve project for name: ' + input.projectName + ' and version: ' + input.projectVersion);
     }
 }

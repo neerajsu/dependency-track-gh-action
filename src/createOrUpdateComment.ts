@@ -19,10 +19,10 @@ export async function createOrUpdateComment(inputs: CreateOrUpdateCommentInputs)
         throw new Error("Repository value is undefined or invalid: " + repository);
     }
     const repo: string[] = repository.split("/");
-    core.debug(`repository: ${repository}`);
+    console.log(`repository: ${repository}`);
 
     const editMode: string = inputs.editMode ? inputs.editMode : "append";
-    core.debug(`editMode: ${editMode}`);
+    console.log(`editMode: ${editMode}`);
     if (!["append", "replace"].includes(editMode)) {
         throw new Error(`Invalid edit-mode '${editMode}'.`);
     }
@@ -48,7 +48,7 @@ export async function createOrUpdateComment(inputs: CreateOrUpdateCommentInputs)
             }
 
             commentBody = commentBody + inputs.body;
-            core.debug(`Comment body: ${commentBody}`);
+            console.log(`Comment body: ${commentBody}`);
             await octokit.rest.issues.updateComment({
                 owner: repo[0],
                 repo: repo[1],
