@@ -100,7 +100,7 @@ function doesProjectHaveSeverityVuln(projectFindings: ProjectFinding[], failOnSe
 }
 
 function convertProjectFindingsToMarkdown(projectFindings: ProjectFinding[]): string {
-    let commentBody = `##${prCommentHeader} has completed. \n`;
+    let commentBody = `## ${prCommentHeader} has completed. \n`;
     if (projectFindings && projectFindings.length == 0) {
         commentBody = commentBody + "No vulnerabilities found by dependency track server";
 

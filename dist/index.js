@@ -491,7 +491,7 @@ function doesProjectHaveSeverityVuln(projectFindings, failOnSeverityLevel) {
     return false;
 }
 function convertProjectFindingsToMarkdown(projectFindings) {
-    let commentBody = `##${prCommentHeader} has completed. \n`;
+    let commentBody = `## ${prCommentHeader} has completed. \n`;
     if (projectFindings && projectFindings.length == 0) {
         commentBody = commentBody + "No vulnerabilities found by dependency track server";
     }
